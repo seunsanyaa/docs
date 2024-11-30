@@ -1,5 +1,5 @@
 {
-  "$schema": "",
+  "$schema": "bookings",
   "name": "Car Rental",
   "logo": {
     "dark": "/logo/dark.svg",
