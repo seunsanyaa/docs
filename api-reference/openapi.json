@@ -56,7 +56,45 @@
             }
           }
         }
-      }
+      },
+
+  "post": {
+        "description": "Returns all bookings",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "bookingId",
+            "in": "query",
+            "description": "Filter bookings by Booking ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Booking list response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookingDetail"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }      
     },
     "/bookings/{id}": {
       "get": {
