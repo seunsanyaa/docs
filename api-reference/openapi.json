@@ -125,7 +125,40 @@
             "description": "Booking not found"
           }
         }
+      },
+
+
+  "post": {
+        "description": "Returns a specific booking by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The booking ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed booking response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
       }
+
+      
     },
     "/cars": {
       "get": {
