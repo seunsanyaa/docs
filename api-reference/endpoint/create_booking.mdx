@@ -1,4 +1,31 @@
 ---
 title: "Create Booking"
 openapi: "POST /plants"
+description: "Creates a new booking in the system."
 ---
+
+**Arguments:**
+
+* `customerId` (string): Unique identifier for the customer
+
+* `carId` (string): Vehicle registration number
+
+* `startDate` (string): Rental start date
+
+* `endDate` (string): Rental end date
+
+* `totalCost` (number): Total cost of the booking
+
+* `paidAmount` (number): Amount paid so far
+
+* `status` (string): Current booking status
+
+* `pickupLocation` (string): Location where the vehicle will be picked up
+
+* `dropoffLocation` (string): Location where the vehicle will be returned
+
+* `customerInsurancetype` (string): Type of insurance selected
+
+* `customerInsuranceNumber` (string): Insurance policy number
+
+**Returns:** Booking ID
