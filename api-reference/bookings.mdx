@@ -1,0 +1,69 @@
+---
+title: 'New file'
+description: 'Description of your new file.'
+---
+
+---
+title: 'Bookings'
+description: 'Manage car rental bookings in the system'
+---
+
+# Bookings API
+
+The Bookings API allows you to create, read, update, and delete booking records in the car rental system.
+
+## Create Booking
+
+Create a new booking in the system.
+
+### Parameters
+
+<ParamField body="customerId" type="string" required>
+  The unique identifier of the customer making the booking
+</ParamField>
+
+<ParamField body="carId" type="string" required>
+  The registration number of the car being booked
+</ParamField>
+
+<ParamField body="startDate" type="string" required>
+  The start date of the booking
+</ParamField>
+
+<ParamField body="endDate" type="string" required>
+  The end date of the booking
+</ParamField>
+
+<ParamField body="totalCost" type="number" required>
+  The total cost of the booking
+</ParamField>
+
+<ParamField body="paidAmount" type="number" required>
+  The amount paid for the booking
+</ParamField>
+
+<ParamField body="status" type="string" required>
+  The current status of the booking
+</ParamField>
+
+<ParamField body="pickupLocation" type="string" required>
+  Location where the car will be picked up
+</ParamField>
+
+<ParamField body="dropoffLocation" type="string" required>
+  Location where the car will be dropped off
+</ParamField>
+
+<ParamField body="customerInsurancetype" type="string" required>
+  Type of insurance selected by the customer
+</ParamField>
+
+<ParamField body="customerInsuranceNumber" type="string" required>
+  Customer's insurance policy number
+</ParamField>
+
+### Response
+
+Returns the ID of the newly created booking.
+
+## 
