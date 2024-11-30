@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "/plants": {
+    "/bookings": {
       "get": {
         "description": "Returns  plants from the system that the user has access to",
         "parameters": [
