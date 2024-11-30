@@ -129,7 +129,7 @@
 
 
   "post": {
-        "description": "Returns a specific booking by ID",
+        "description": "Updates a specific booking by ID",
         "parameters": [
           {
             "name": "id",
