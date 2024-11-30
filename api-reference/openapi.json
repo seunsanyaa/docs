@@ -33,17 +33,9 @@
             }
           },
           {
-            "name": "customerId",
+            "name": "bookingId",
             "in": "query",
-            "description": "Filter bookings by customer ID",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "carId",
-            "in": "query",
-            "description": "Filter bookings by car ID",
+            "description": "Filter bookings by Booking ID",
             "schema": {
               "type": "string"
             }
