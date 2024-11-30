@@ -77,9 +77,9 @@
     {
       "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/get_bookings",
+        "api-reference/endpoint/create_booking",
+        "api-reference/endpoint/delete_booking"
       ]
     }
   ],
