@@ -59,7 +59,7 @@
       },
 
   "post": {
-        "description": "Returns all bookings",
+        "description": "Creates Bookings",
         "parameters": [
           {
             "name": "limit",
