@@ -1,5 +1,5 @@
 {
-  "$schema": "bookings",
+  "$schema": "https://mintlify.com/schema.json",
   "name": "Car Rental",
   "logo": {
     "dark": "/logo/dark.svg",
