@@ -19,6 +19,79 @@
     }
   ],
   "paths": {
+      "/staff": {
+      "get": {
+        "summary": "Get all staff members",
+        "responses": {
+          "200": {
+            "description": "A list of staff members",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Staff"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new staff member",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Staff"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Staff member created",
+            "content": {
+              "application/json": {
+                "$ref": "#/components/schemas/Staff"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/staff/{id}": {
+      "get": {
+        "summary": "Get a staff member by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the staff member to retrieve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Staff member found",
+            "content": {
+              "application/json": {
+                "$ref": "#/components/schemas/Staff"
+              }
+            }
+          },
+          "404": {
+            "description": "Staff member not found"
+          }
+        }
+      },
+      // Additional methods (PUT, DELETE) can be added here
+    },
     "/bookings": {
       "get": {
         "description": "Returns all bookings",
