@@ -1,247 +1,54 @@
 {
-  "openapi": "3.0.0",
+  "openapi": "3.0.1",
   "info": {
     "title": "Car Rental API",
-    "version": "1.0.0",
-    "description": "API for managing users, staff, customers, cars, bookings, and payments."
+    "description": "API documentation for a car rental application.",
+    "version": "1.0.0"
   },
   "paths": {
-    "/users": {
-      "get": {
-        "summary": "Retrieve all users",
-        "description": "Get a list of all users.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new user",
-        "description": "Add a new user to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "summary": "Retrieve a specific user by ID",
-        "description": "Get details of a specific user using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the user to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "user not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific user by ID",
-        "description": "Update details of a specific user.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the user to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "user not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific user by ID",
-        "description": "Remove a specific user from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the user to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "user not found."
-          }
-        }
-      }
-    },
-    "/staff": {
-      "get": {
-        "summary": "Retrieve all staff",
-        "description": "Get a list of all staff.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new staf",
-        "description": "Add a new staf to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/staff/{id}": {
-      "get": {
-        "summary": "Retrieve a specific staf by ID",
-        "description": "Get details of a specific staf using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the staf to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "staf not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific staf by ID",
-        "description": "Update details of a specific staf.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the staf to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "staf not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific staf by ID",
-        "description": "Remove a specific staf from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the staf to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "staf not found."
-          }
-        }
-      }
-    },
     "/customers": {
       "get": {
-        "summary": "Retrieve all customers",
-        "description": "Get a list of all customers.",
+        "summary": "Get all customers",
         "responses": {
           "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
+            "description": "A list of customers.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Customer"
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
         "summary": "Create a new customer",
-        "description": "Add a new customer to the database.",
         "responses": {
           "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
+            "description": "The created customer object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
           }
         }
       }
     },
     "/customers/{id}": {
       "get": {
-        "summary": "Retrieve a specific customer by ID",
-        "description": "Get details of a specific customer using its ID.",
+        "summary": "Get a customer by ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "The ID of the customer to retrieve.",
             "schema": {
               "type": "string"
             }
@@ -249,22 +56,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response."
+            "description": "A single customer object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
           },
           "404": {
-            "description": "customer not found."
+            "description": "Customer not found."
           }
         }
       },
       "put": {
-        "summary": "Update a specific customer by ID",
-        "description": "Update details of a specific customer.",
+        "summary": "Update a customer by ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "The ID of the customer to update.",
             "schema": {
               "type": "string"
             }
@@ -272,1142 +84,98 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
+            "description": "The updated customer object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
           },
           "404": {
-            "description": "customer not found."
+            "description": "Customer not found."
           }
         }
       },
       "delete": {
-        "summary": "Delete a specific customer by ID",
-        "description": "Remove a specific customer from the database.",
+        "summary": "Delete a customer by ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "The ID of the customer to delete.",
             "schema": {
               "type": "string"
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successfully deleted."
+          "204": {
+            "description": "Customer deleted successfully."
           },
           "404": {
-            "description": "customer not found."
-          }
-        }
-      }
-    },
-    "/settings": {
-      "get": {
-        "summary": "Retrieve all settings",
-        "description": "Get a list of all settings.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new setting",
-        "description": "Add a new setting to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/settings/{id}": {
-      "get": {
-        "summary": "Retrieve a specific setting by ID",
-        "description": "Get details of a specific setting using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the setting to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "setting not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific setting by ID",
-        "description": "Update details of a specific setting.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the setting to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "setting not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific setting by ID",
-        "description": "Remove a specific setting from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the setting to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "setting not found."
-          }
-        }
-      }
-    },
-    "/cars": {
-      "get": {
-        "summary": "Retrieve all cars",
-        "description": "Get a list of all cars.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new car",
-        "description": "Add a new car to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/cars/{id}": {
-      "get": {
-        "summary": "Retrieve a specific car by ID",
-        "description": "Get details of a specific car using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the car to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "car not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific car by ID",
-        "description": "Update details of a specific car.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the car to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "car not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific car by ID",
-        "description": "Remove a specific car from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the car to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "car not found."
-          }
-        }
-      }
-    },
-    "/specifications": {
-      "get": {
-        "summary": "Retrieve all specifications",
-        "description": "Get a list of all specifications.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new specification",
-        "description": "Add a new specification to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/specifications/{id}": {
-      "get": {
-        "summary": "Retrieve a specific specification by ID",
-        "description": "Get details of a specific specification using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the specification to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "specification not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific specification by ID",
-        "description": "Update details of a specific specification.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the specification to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "specification not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific specification by ID",
-        "description": "Remove a specific specification from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the specification to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "specification not found."
-          }
-        }
-      }
-    },
-    "/bookings": {
-      "get": {
-        "summary": "Retrieve all bookings",
-        "description": "Get a list of all bookings.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new booking",
-        "description": "Add a new booking to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/bookings/{id}": {
-      "get": {
-        "summary": "Retrieve a specific booking by ID",
-        "description": "Get details of a specific booking using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the booking to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "booking not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific booking by ID",
-        "description": "Update details of a specific booking.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the booking to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "booking not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific booking by ID",
-        "description": "Remove a specific booking from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the booking to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "booking not found."
-          }
-        }
-      }
-    },
-    "/payments": {
-      "get": {
-        "summary": "Retrieve all payments",
-        "description": "Get a list of all payments.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new payment",
-        "description": "Add a new payment to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/payments/{id}": {
-      "get": {
-        "summary": "Retrieve a specific payment by ID",
-        "description": "Get details of a specific payment using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the payment to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "payment not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific payment by ID",
-        "description": "Update details of a specific payment.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the payment to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "payment not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific payment by ID",
-        "description": "Remove a specific payment from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the payment to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "payment not found."
-          }
-        }
-      }
-    },
-    "/fleets": {
-      "get": {
-        "summary": "Retrieve all fleets",
-        "description": "Get a list of all fleets.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new fleet",
-        "description": "Add a new fleet to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/fleets/{id}": {
-      "get": {
-        "summary": "Retrieve a specific fleet by ID",
-        "description": "Get details of a specific fleet using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the fleet to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "fleet not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific fleet by ID",
-        "description": "Update details of a specific fleet.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the fleet to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "fleet not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific fleet by ID",
-        "description": "Remove a specific fleet from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the fleet to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "fleet not found."
-          }
-        }
-      }
-    },
-    "/reviews": {
-      "get": {
-        "summary": "Retrieve all reviews",
-        "description": "Get a list of all reviews.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new review",
-        "description": "Add a new review to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/reviews/{id}": {
-      "get": {
-        "summary": "Retrieve a specific review by ID",
-        "description": "Get details of a specific review using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the review to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "review not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific review by ID",
-        "description": "Update details of a specific review.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the review to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "review not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific review by ID",
-        "description": "Remove a specific review from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the review to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "review not found."
-          }
-        }
-      }
-    },
-    "/promotions": {
-      "get": {
-        "summary": "Retrieve all promotions",
-        "description": "Get a list of all promotions.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new promotion",
-        "description": "Add a new promotion to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/promotions/{id}": {
-      "get": {
-        "summary": "Retrieve a specific promotion by ID",
-        "description": "Get details of a specific promotion using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the promotion to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "promotion not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific promotion by ID",
-        "description": "Update details of a specific promotion.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the promotion to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "promotion not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific promotion by ID",
-        "description": "Remove a specific promotion from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the promotion to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "promotion not found."
-          }
-        }
-      }
-    },
-    "/paymentSessions": {
-      "get": {
-        "summary": "Retrieve all paymentSessions",
-        "description": "Get a list of all paymentSessions.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new paymentSession",
-        "description": "Add a new paymentSession to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/paymentSessions/{id}": {
-      "get": {
-        "summary": "Retrieve a specific paymentSession by ID",
-        "description": "Get details of a specific paymentSession using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the paymentSession to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "paymentSession not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific paymentSession by ID",
-        "description": "Update details of a specific paymentSession.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the paymentSession to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "paymentSession not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific paymentSession by ID",
-        "description": "Remove a specific paymentSession from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the paymentSession to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "paymentSession not found."
-          }
-        }
-      }
-    },
-    "/subscriptions": {
-      "get": {
-        "summary": "Retrieve all subscriptions",
-        "description": "Get a list of all subscriptions.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new subscription",
-        "description": "Add a new subscription to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/subscriptions/{id}": {
-      "get": {
-        "summary": "Retrieve a specific subscription by ID",
-        "description": "Get details of a specific subscription using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the subscription to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "subscription not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific subscription by ID",
-        "description": "Update details of a specific subscription.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the subscription to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "subscription not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific subscription by ID",
-        "description": "Remove a specific subscription from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the subscription to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "subscription not found."
-          }
-        }
-      }
-    },
-    "/messages": {
-      "get": {
-        "summary": "Retrieve all messages",
-        "description": "Get a list of all messages.",
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "400": {
-            "description": "Bad request."
-          }
-        }
-      },
-      "post": {
-        "summary": "Create a new message",
-        "description": "Add a new message to the database.",
-        "responses": {
-          "201": {
-            "description": "Successfully created."
-          },
-          "400": {
-            "description": "Invalid input."
-          }
-        }
-      }
-    },
-    "/messages/{id}": {
-      "get": {
-        "summary": "Retrieve a specific message by ID",
-        "description": "Get details of a specific message using its ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the message to retrieve.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response."
-          },
-          "404": {
-            "description": "message not found."
-          }
-        }
-      },
-      "put": {
-        "summary": "Update a specific message by ID",
-        "description": "Update details of a specific message.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the message to update.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully updated."
-          },
-          "400": {
-            "description": "Invalid input."
-          },
-          "404": {
-            "description": "message not found."
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a specific message by ID",
-        "description": "Remove a specific message from the database.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the message to delete.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted."
-          },
-          "404": {
-            "description": "message not found."
+            "description": "Customer not found."
           }
         }
       }
     }
   },
   "components": {
-    "schemas": {}
+    "schemas": {
+      "Customer": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "nationality": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "licenseNumber": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          },
+          "licensePicture": {
+            "type": "string",
+            "nullable": true
+          },
+          "goldenMember": {
+            "type": "boolean"
+          },
+          "promotions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "usedPromotions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rewardPoints": {
+            "type": "integer"
+          },
+          "subscriptionPlan": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
   }
 }
