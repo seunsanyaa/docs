@@ -78,7 +78,8 @@
         "api-reference/endpoint/create_booking",
         "api-reference/endpoint/delete_booking",
         "api-reference/endpoint/update_booking",
-        "api-reference/endpoint/get_booking"
+        "api-reference/endpoint/get_booking",
+        "api-reference/endpoint/create_staff",
       ]
     }
   ],
