@@ -62,6 +62,7 @@
         }
       }
     },
+    
     "/staff/{id}": {
       "get": {
         "summary": "Get a staff member by ID",
@@ -90,7 +91,6 @@
           }
         }
       },
-      // Additional methods (PUT, DELETE) can be added here
     },
     "/bookings": {
       "get": {
