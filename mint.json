@@ -82,7 +82,8 @@
         "api-reference/endpoint/create_staff",
         "api-reference/endpoint/update_staff",
         "api-reference/endpoint/delete_staff",
-        "api-reference/endpoint/get_staffs"
+        "api-reference/endpoint/get_staffs" ,
+        "api-reference/endpoint/get_staff" 
       ]
     }
   ],
