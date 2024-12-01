@@ -2,16 +2,240 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Car Rental API",
-    "description": "API documentation for a car rental application.",
+    "description": "API specification for a car rental service system",
+    "license": {
+      "name": "MIT"
+    },
     "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "http://sandbox.mintlify.com"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "paths": {
-    "/customers": {
+    "/bookings": {
       "get": {
-        "summary": "Get all customers",
+        "description": "Returns all bookings",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "bookingId",
+            "in": "query",
+            "description": "Filter bookings by Booking ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "A list of customers.",
+            "description": "Booking list response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookingDetail"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+
+  "post": {
+        "description": "Creates Bookings",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "bookingId",
+            "in": "query",
+            "description": "Filter bookings by Booking ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Booking list response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookingDetail"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }      
+    },
+    "/bookings/{id}": {
+      "get": {
+        "description": "Returns a specific booking by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The booking ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed booking response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
+      },
+
+      "delete": {
+        "description": "Deletes a specific booking by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The booking ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed booking response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
+      },
+  "post": {
+        "description": "Updates a specific booking by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The booking ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed booking response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
+      }
+
+      
+    },
+    "/cars": {
+      "get": {
+        "description": "Returns all available cars",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car list response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Car"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers": {
+      "get": {
+        "description": "Returns all customers",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer list response",
             "content": {
               "application/json": {
                 "schema": {
@@ -24,16 +248,32 @@
             }
           }
         }
-      },
-      "post": {
-        "summary": "Create a new customer",
+      }
+    },
+    "/payments": {
+      "get": {
+        "description": "Returns all payments",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
-          "201": {
-            "description": "The created customer object.",
+          "200": {
+            "description": "Payment list response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Customer"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Payment"
+                  }
                 }
               }
             }
@@ -41,81 +281,95 @@
         }
       }
     },
-    "/customers/{id}": {
+    "/reviews": {
       "get": {
-        "summary": "Get a customer by ID",
+        "description": "Returns all reviews",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "A single customer object.",
+            "description": "Review list response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Customer"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Review"
+                  }
                 }
               }
             }
-          },
-          "404": {
-            "description": "Customer not found."
           }
         }
-      },
-      "put": {
-        "summary": "Update a customer by ID",
+      }
+    },
+    "/staff": {
+      "get": {
+        "description": "Returns all staff members",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "The updated customer object.",
+            "description": "Staff list response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Customer"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Staff"
+                  }
                 }
               }
             }
-          },
-          "404": {
-            "description": "Customer not found."
           }
         }
-      },
-      "delete": {
-        "summary": "Delete a customer by ID",
+      }
+    },
+    "/users": {
+      "get": {
+        "description": "Returns all users",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Customer deleted successfully."
-          },
-          "404": {
-            "description": "Customer not found."
+          "200": {
+            "description": "User list response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -123,58 +377,97 @@
   },
   "components": {
     "schemas": {
-      "Customer": {
+      "BookingDetail": {
         "type": "object",
+        "required": [
+          "id",
+          "customerId",
+          "carId",
+          "startDate",
+          "endDate",
+          "totalCost",
+          "paidAmount",
+          "status"
+        ],
         "properties": {
-          "userId": {
+          "id": {
             "type": "string"
           },
-          "nationality": {
+          "customerId": {
             "type": "string"
           },
-          "age": {
-            "type": "integer"
-          },
-          "phoneNumber": {
+          "carId": {
             "type": "string"
           },
-          "licenseNumber": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
-          },
-          "dateOfBirth": {
+          "startDate": {
             "type": "string",
-            "format": "date"
+            "format": "date-time"
           },
-          "licensePicture": {
+          "endDate": {
             "type": "string",
-            "nullable": true
+            "format": "date-time"
           },
-          "goldenMember": {
-            "type": "boolean"
+          "totalCost": {
+            "type": "number"
           },
-          "promotions": {
-            "type": "array",
-            "items": {
-              "type": "string"
+          "paidAmount": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "confirmed", "completed", "cancelled"]
+          },
+          "pickupLocation": {
+            "type": "string"
+          },
+          "dropoffLocation": {
+            "type": "string"
+          },
+          "customerInsurancetype": {
+            "type": "string"
+          },
+          "customerInsuranceNumber": {
+            "type": "string"
+          },
+          "carDetails": {
+            "type": "object",
+            "properties": {
+              "make": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string"
+              },
+              "year": {
+                "type": "integer"
+              },
+              "color": {
+                "type": "string"
+              },
+              "trim": {
+                "type": "string"
+              }
             }
           },
-          "usedPromotions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "reviewId": {
+            "type": "string"
           },
-          "rewardPoints": {
+          "rewardsPointsEarned": {
             "type": "integer"
           },
-          "subscriptionPlan": {
-            "type": "string",
-            "nullable": true
+          "rewardsPointsUsed": {
+            "type": "integer"
+          },
+          "cancellationPolicy": {
+            "type": "string"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }
