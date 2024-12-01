@@ -19,6 +19,425 @@
     }
   ],
   "paths": {
+      "/cars": {
+      "post": {
+        "summary": "Create a new car",
+        "description": "Creates a new car in the system",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "model",
+                  "color",
+                  "maker",
+                  "trim",
+                  "lastMaintenanceDate",
+                  "available",
+                  "year",
+                  "registrationNumber",
+                  "pictures",
+                  "pricePerDay",
+                  "disabled",
+                  "golden"
+                ],
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "Car model"
+                  },
+                  "color": {
+                    "type": "string",
+                    "description": "Car color"
+                  },
+                  "maker": {
+                    "type": "string",
+                    "description": "Car manufacturer"
+                  },
+                  "trim": {
+                    "type": "string",
+                    "description": "Car trim level"
+                  },
+                  "lastMaintenanceDate": {
+                    "type": "string",
+                    "description": "Date of last maintenance"
+                  },
+                  "available": {
+                    "type": "boolean",
+                    "description": "Whether the car is available for rent"
+                  },
+                  "year": {
+                    "type": "integer",
+                    "description": "Car manufacturing year"
+                  },
+                  "registrationNumber": {
+                    "type": "string",
+                    "description": "Car registration number"
+                  },
+                  "pictures": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Array of picture URLs"
+                  },
+                  "pricePerDay": {
+                    "type": "number",
+                    "description": "Rental price per day"
+                  },
+                  "averageRating": {
+                    "type": "number",
+                    "description": "Average rating of the car"
+                  },
+                  "categories": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Categories the car belongs to"
+                  },
+                  "disabled": {
+                    "type": "boolean",
+                    "description": "Whether the car is disabled in the system"
+                  },
+                  "golden": {
+                    "type": "boolean",
+                    "description": "Whether the car has golden status"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Car created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all cars",
+        "description": "Retrieves a list of all non-disabled cars in the system",
+        "responses": {
+          "200": {
+            "description": "List of cars retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Car"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{registrationNumber}": {
+      "get": {
+        "summary": "Get car by registration number",
+        "description": "Retrieves detailed information about a specific car",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The registration number of the car to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update car",
+        "description": "Updates an existing car",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The registration number of the car to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string"
+                  },
+                  "color": {
+                    "type": "string"
+                  },
+                  "maker": {
+                    "type": "string"
+                  },
+                  "trim": {
+                    "type": "string"
+                  },
+                  "lastMaintenanceDate": {
+                    "type": "string"
+                  },
+                  "available": {
+                    "type": "boolean"
+                  },
+                  "year": {
+                    "type": "integer"
+                  },
+                  "pictures": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "disabled": {
+                    "type": "boolean"
+                  },
+                  "pricePerDay": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Car updated successfully"
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete car",
+        "description": "Deletes an existing car",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The registration number of the car to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car deleted successfully"
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      }
+    },
+    "/cars/specifications/{registrationNumber}": {
+      "get": {
+        "summary": "Get car specifications",
+        "description": "Retrieves detailed specifications for a specific car",
+        "parameters": [
+          {
+            "name": "registrationNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The registration number of the car"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car specifications retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarSpecifications"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Specifications not found"
+          }
+        }
+      }
+    },
+    "/cars/filtered": {
+      "get": {
+        "summary": "Get filtered cars",
+        "description": "Retrieves cars based on specified filters",
+        "parameters": [
+          {
+            "name": "maker",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by car maker"
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by car model"
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Filter by manufacturing year"
+          },
+          {
+            "name": "engineType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by engine type"
+          },
+          {
+            "name": "engineCylinders",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by number of cylinders"
+          },
+          {
+            "name": "fuelType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by fuel type"
+          },
+          {
+            "name": "transmission",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by transmission type"
+          },
+          {
+            "name": "drive",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by drive type"
+          },
+          {
+            "name": "doors",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by number of doors"
+          },
+          {
+            "name": "engineHorsepower",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by engine horsepower"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered cars retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Car"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/category/{category}": {
+      "get": {
+        "summary": "Get cars by category",
+        "description": "Retrieves cars belonging to a specific category",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Category to filter cars by"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cars retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Car"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
     "/bookings": {
       "post": {
         "summary": "Create a new booking",
