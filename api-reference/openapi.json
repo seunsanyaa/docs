@@ -229,7 +229,7 @@
           }
         }
       },
-  "post": {
+  "put": {
         "description": "Updates a specific booking by ID",
         "parameters": [
           {
