@@ -139,31 +139,7 @@
                   "items": {
                     "$ref": "#/components/schemas/BookingDetail"
                   }
-                },
-                "example": [{
-                  "id": "booking_123",
-                  "customerId": "user_123",
-                  "carId": "ABC123",
-                  "startDate": "2024-12-01T10:00:00Z",
-                  "endDate": "2024-12-05T10:00:00Z",
-                  "totalCost": 500.00,
-                  "paidAmount": 500.00,
-                  "status": "confirmed",
-                  "pickupLocation": "Airport Terminal 1",
-                  "dropoffLocation": "Downtown Branch",
-                  "customerInsurancetype": "comprehensive",
-                  "customerInsuranceNumber": "INS123456",
-                  "carDetails": {
-                    "make": "Toyota",
-                    "model": "Camry",
-                    "year": 2024,
-                    "color": "Silver",
-                    "trim": "SE"
-                  },
-                  "rewardsPointsEarned": 50,
-                  "rewardsPointsUsed": 0,
-                  "cancellationPolicy": "Standard 24-hour cancellation policy applies"
-                }]
+                }
               }
             }
           }
@@ -241,25 +217,13 @@
                     "type": "string"
                   }
                 }
-              },
-              "example": {
-                "status": "confirmed",
-                "pickupLocation": "Updated Location"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Booking updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                },
-                "example": "booking_123"
-              }
-            }
+            "description": "Booking updated successfully"
           },
           "404": {
             "description": "Booking not found"
@@ -282,18 +246,179 @@
         ],
         "responses": {
           "200": {
-            "description": "Booking deleted successfully",
+            "description": "Booking deleted successfully"
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
+      }
+    },
+    "/staff": {
+      "get": {
+        "summary": "Get all staff members",
+        "description": "Retrieves a list of all staff members in the system",
+        "responses": {
+          "200": {
+            "description": "List of staff members retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StaffMember"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add new staff member",
+        "description": "Creates a new staff member in the system",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["role", "email"],
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "description": "Role of the staff member"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email address of the staff member"
+                  }
+                }
+              },
+              "example": {
+                "role": "manager",
+                "email": "manager@example.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Staff member created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "description": "The ID of the created staff member"
                 },
-                "example": "booking_123"
+                "example": "staff_123"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      }
+    },
+    "/staff/{id}": {
+      "get": {
+        "summary": "Get staff member by ID",
+        "description": "Retrieves detailed information about a specific staff member",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the staff member to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Staff member details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffMember"
+                }
               }
             }
           },
           "404": {
-            "description": "Booking not found"
+            "description": "Staff member not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update staff member",
+        "description": "Updates an existing staff member",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the staff member to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "description": "Updated role of the staff member"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Updated email address of the staff member"
+                  }
+                }
+              },
+              "example": {
+                "role": "senior_manager",
+                "email": "senior.manager@example.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Staff member updated successfully"
+          },
+          "404": {
+            "description": "Staff member not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete staff member",
+        "description": "Deletes an existing staff member",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the staff member to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Staff member deleted successfully"
+          },
+          "404": {
+            "description": "Staff member not found"
           }
         }
       }
@@ -384,6 +509,24 @@
           },
           "cancellationPolicy": {
             "type": "string"
+          }
+        }
+      },
+      "StaffMember": {
+        "type": "object",
+        "required": ["id", "role", "email"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the staff member"
+          },
+          "role": {
+            "type": "string",
+            "description": "Role of the staff member"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address of the staff member"
           }
         }
       }
