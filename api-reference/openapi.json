@@ -19,173 +19,175 @@
     }
   ],
   "paths": {
-      "/staff": {
-      "get": {
-        "summary": "Get all staff members",
-        "responses": {
-          "200": {
-            "description": "A list of staff members",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Staff"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
+    "/bookings": {
       "post": {
-        "summary": "Add a new staff member",
+        "summary": "Create a new booking",
+        "description": "Creates a new booking in the system",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Staff"
+                "type": "object",
+                "required": [
+                  "customerId",
+                  "carId",
+                  "startDate",
+                  "endDate",
+                  "totalCost",
+                  "paidAmount",
+                  "status",
+                  "pickupLocation",
+                  "dropoffLocation",
+                  "customerInsurancetype",
+                  "customerInsuranceNumber"
+                ],
+                "properties": {
+                  "customerId": {
+                    "type": "string",
+                    "description": "ID of the customer making the booking"
+                  },
+                  "carId": {
+                    "type": "string",
+                    "description": "Registration number of the car being booked"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Start date and time of the booking"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "End date and time of the booking"
+                  },
+                  "totalCost": {
+                    "type": "number",
+                    "description": "Total cost of the booking"
+                  },
+                  "paidAmount": {
+                    "type": "number",
+                    "description": "Amount already paid for the booking"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["pending", "confirmed", "completed", "cancelled"],
+                    "description": "Current status of the booking"
+                  },
+                  "pickupLocation": {
+                    "type": "string",
+                    "description": "Location where the car will be picked up"
+                  },
+                  "dropoffLocation": {
+                    "type": "string",
+                    "description": "Location where the car will be dropped off"
+                  },
+                  "customerInsurancetype": {
+                    "type": "string",
+                    "description": "Type of insurance coverage"
+                  },
+                  "customerInsuranceNumber": {
+                    "type": "string",
+                    "description": "Customer's insurance policy number"
+                  }
+                }
+              },
+              "example": {
+                "customerId": "user_123",
+                "carId": "ABC123",
+                "startDate": "2024-12-01T10:00:00Z",
+                "endDate": "2024-12-05T10:00:00Z",
+                "totalCost": 500.00,
+                "paidAmount": 0,
+                "status": "pending",
+                "pickupLocation": "Airport Terminal 1",
+                "dropoffLocation": "Downtown Branch",
+                "customerInsurancetype": "comprehensive",
+                "customerInsuranceNumber": "INS123456"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Staff member created",
+            "description": "Booking created successfully",
             "content": {
               "application/json": {
-                "$ref": "#/components/schemas/Staff"
+                "schema": {
+                  "type": "string",
+                  "description": "The ID of the created booking"
+                },
+                "example": "booking_abc123"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all bookings",
+        "description": "Retrieves a list of all bookings in the system",
+        "responses": {
+          "200": {
+            "description": "List of bookings retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookingDetail"
+                  }
+                },
+                "example": [{
+                  "id": "booking_123",
+                  "customerId": "user_123",
+                  "carId": "ABC123",
+                  "startDate": "2024-12-01T10:00:00Z",
+                  "endDate": "2024-12-05T10:00:00Z",
+                  "totalCost": 500.00,
+                  "paidAmount": 500.00,
+                  "status": "confirmed",
+                  "pickupLocation": "Airport Terminal 1",
+                  "dropoffLocation": "Downtown Branch",
+                  "customerInsurancetype": "comprehensive",
+                  "customerInsuranceNumber": "INS123456",
+                  "carDetails": {
+                    "make": "Toyota",
+                    "model": "Camry",
+                    "year": 2024,
+                    "color": "Silver",
+                    "trim": "SE"
+                  },
+                  "rewardsPointsEarned": 50,
+                  "rewardsPointsUsed": 0,
+                  "cancellationPolicy": "Standard 24-hour cancellation policy applies"
+                }]
               }
             }
           }
         }
       }
-    },
-    
-    "/staff/{id}": {
-      "get": {
-        "summary": "Get a staff member by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "ID of the staff member to retrieve",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Staff member found",
-            "content": {
-              "application/json": {
-                "$ref": "#/components/schemas/Staff"
-              }
-            }
-          },
-          "404": {
-            "description": "Staff member not found"
-          }
-        }
-      },
-    },
-    "/bookings": {
-      "get": {
-        "description": "Returns all bookings",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "bookingId",
-            "in": "query",
-            "description": "Filter bookings by Booking ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Booking list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BookingDetail"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-
-  "post": {
-        "description": "Creates Bookings",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "bookingId",
-            "in": "query",
-            "description": "Filter bookings by Booking ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Booking list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/BookingDetail"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }      
     },
     "/bookings/{id}": {
       "get": {
-        "description": "Returns a specific booking by ID",
+        "summary": "Get booking by ID",
+        "description": "Retrieves detailed information about a specific booking",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "The booking ID",
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The ID of the booking to retrieve"
           }
         ],
         "responses": {
           "200": {
-            "description": "Detailed booking response",
+            "description": "Booking details retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -199,250 +201,99 @@
           }
         }
       },
-
+      "put": {
+        "summary": "Update booking",
+        "description": "Updates an existing booking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the booking to update"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["pending", "confirmed", "completed", "cancelled"]
+                  },
+                  "pickupLocation": {
+                    "type": "string"
+                  },
+                  "dropoffLocation": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "status": "confirmed",
+                "pickupLocation": "Updated Location"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Booking updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "booking_123"
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found"
+          }
+        }
+      },
       "delete": {
-        "description": "Deletes a specific booking by ID",
+        "summary": "Delete booking",
+        "description": "Deletes an existing booking",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "The booking ID",
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The ID of the booking to delete"
           }
         ],
         "responses": {
           "200": {
-            "description": "Detailed booking response",
+            "description": "Booking deleted successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BookingDetail"
-                }
+                  "type": "string"
+                },
+                "example": "booking_123"
               }
             }
           },
           "404": {
             "description": "Booking not found"
-          }
-        }
-      },
-  "put": {
-        "description": "Updates a specific booking by ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The booking ID",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Detailed booking response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BookingDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Booking not found"
-          }
-        }
-      }
-
-      
-    },
-    "/cars": {
-      "get": {
-        "description": "Returns all available cars",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Car list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Car"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/customers": {
-      "get": {
-        "description": "Returns all customers",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Customer list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Customer"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/payments": {
-      "get": {
-        "description": "Returns all payments",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Payment list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Payment"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/reviews": {
-      "get": {
-        "description": "Returns all reviews",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Review list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Review"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/staff": {
-      "get": {
-        "description": "Returns all staff members",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Staff list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Staff"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users": {
-      "get": {
-        "description": "Returns all users",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User list response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
           }
         }
       }
