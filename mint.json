@@ -88,7 +88,7 @@
         "api-reference/endpoint/get_car" ,
         "api-reference/endpoint/get_cars" ,
         "api-reference/endpoint/delete_car" ,
-        "api-reference/endpoint/update_car" ,
+        "api-reference/endpoint/update_car" 
       ]
     }
   ],
