@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "https://carrenta-bcbba8394638.herokuapp.com/api/staff"
+      "url": "https://carrenta-bcbba8394638.herokuapp.com/api"
     }
   ],
   "security": [
